@@ -94,5 +94,75 @@ namespace CTCI
 
             return str;
         }
+
+        public static bool PalindromePermutation(string str1, string str2)
+        {
+
+            return IsPermutation(str1, str2) && IsPalindromePermutation(str1) && IsPalindromePermutation(str2);
+        }
+
+        private static bool IsPalindromePermutation(string str1)
+        {
+            for (int i = 0; i < str1.Length / 2 - 1; i++)
+            {
+                if (str1[i] != str1[str1.Length - i - 1])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public bool OneAway(string str1, string str2)
+        {
+            int discordScore = 0;
+            if (str1.Length == str2.Length)
+            {
+                for (int i = 0; i < str1.Length; i++)
+                {
+                    if (str1[i] != str2[i])
+                    {
+                        discordScore++;
+                    }
+                }
+            }
+
+            if (discordScore == 1)
+            {
+                return true;
+            }
+
+            discordScore = 0;
+
+            if (Math.Abs(str1.Length - str2.Length) == 1)
+            {
+                int startIndex = 0;
+                int endIndex = str1.Length > str2.Length ? str1.Length : str2.Length;
+                while (startIndex <= endIndex-1)
+                {
+                    if (str1[startIndex] == str2[startIndex])
+                    {
+                        startIndex++;
+                    }
+                    else
+                    {
+                        while (endIndex >= startIndex)
+                        {
+                            if(str1[endIndex] == str2[endIndex])
+                                endIndex--;
+                            else
+                            {
+                                return false;
+                            }
+                        }
+
+                        return true;
+                    }
+
+                    return false;
+                }
+            }
+        }
     }
 }

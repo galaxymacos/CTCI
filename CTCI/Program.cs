@@ -14,7 +14,8 @@ namespace CTCI
             Console.WriteLine(StringLib.IsPermutation("abcdef","acedbf"));
 
             Console.WriteLine(StringLib.ReplaceSpace("a b "));
-            
+
+            Console.WriteLine(StringLib.PalindromePermutation("taco cat", "atco cta"));
         }
     }
 }
