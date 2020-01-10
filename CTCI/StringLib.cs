@@ -114,11 +114,13 @@ namespace CTCI
             return true;
         }
 
-        public bool OneAway(string str1, string str2)
+        public static bool OneAway(string str1, string str2)
         {
             int discordScore = 0;
             if (str1.Length == str2.Length)
             {
+                Console.WriteLine("two string has no differnece");
+
                 for (int i = 0; i < str1.Length; i++)
                 {
                     if (str1[i] != str2[i])
@@ -126,43 +128,110 @@ namespace CTCI
                         discordScore++;
                     }
                 }
+                if (discordScore == 1)
+                {
+                    return true;
+                }
+
+
+                return false;
             }
 
-            if (discordScore == 1)
-            {
-                return true;
-            }
 
-            discordScore = 0;
+
 
             if (Math.Abs(str1.Length - str2.Length) == 1)
             {
-                int startIndex = 0;
-                int endIndex = str1.Length > str2.Length ? str1.Length : str2.Length;
-                while (startIndex <= endIndex-1)
+                bool str1Longer = str1.Length > str2.Length;
+                int str1Index = 0;
+                int str2Index = 0;
+                while (str1Index < str1.Length || str2Index < str2.Length)
                 {
-                    if (str1[startIndex] == str2[startIndex])
+                    if (str1Index == str1.Length || str2Index == str2.Length) return true;
+                    if (str1[str1Index] != str2[str2Index])
                     {
-                        startIndex++;
-                    }
-                    else
-                    {
-                        while (endIndex >= startIndex)
+                        if (str1Longer)
                         {
-                            if(str1[endIndex] == str2[endIndex])
-                                endIndex--;
-                            else
-                            {
-                                return false;
-                            }
+                            str1 = str1.Substring(0, str1Index)+str1.Substring(str1Index+1, str1.Length -1 -str1Index);
+                        }
+                        else
+                        {
+                            str2 = str2.Substring(0, str2Index)+str2.Substring(str2Index+1, str2.Length -1-str2Index);
                         }
 
-                        return true;
+                        break;
                     }
+                    str1Index++;
+                    str2Index++;
+                }
 
-                    return false;
+                if (String.Compare(str1, str2, StringComparison.Ordinal) == 0)
+                {
+                    return true;
+                }
+
+                return false;
+
+            }
+
+            Console.WriteLine("two strings have 2 difference");
+            return false;
+        }
+
+        /// <summary>
+        /// perform basic compression using the counts of repeated characters. For example, the string aabcccccaaa would become a2blc5a3
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string StringCompression(string str)
+        {
+            if (str == "")
+            {
+                return "";
+            }
+
+            int scanningIndex = 0;
+            char scanningLetter = str[scanningIndex];
+            int repetition = 1;
+            StringBuilder sb = new StringBuilder("");
+            sb.Append(scanningLetter);
+            while (scanningIndex+1 < str.Length)
+            {
+                scanningIndex++;
+                if (scanningLetter == str[scanningIndex])
+                {
+                    repetition++;
+                }
+                else
+                {
+                    sb.Append(repetition);
+                    repetition = 1;
+                    scanningLetter = str[scanningIndex];
+                    sb.Append(scanningLetter);
                 }
             }
+            sb.Append(repetition);
+            return sb.ToString().Length >= str.Length ? str : sb.ToString();
+        }
+
+        public static int[,] RotateMatrix(int[,] matrix)
+        {
+            int m = matrix.GetLength(0);
+            int n = matrix.GetLength(1);
+            int[,] newMatrix = new int[n, m];
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    newMatrix[j, m-i-1] = matrix[i, j];
+                }
+            }
+            return newMatrix;
+        }
+
+        public static bool StringRotation(string str1, string str2)
+        {
+            return false;
         }
     }
 }
